@@ -1,0 +1,20 @@
+-- LOAD data from input source
+transactions = LOAD 'sample_data.txt' USING PigStorage('\t') AS (user_id:int, transaction_amount:float);
+
+-- FILTER transactions where transaction_amount is greater than 500
+filtered_transactions = FILTER transactions BY transaction_amount > 500;
+
+-- GROUP transactions by user_id
+grouped_transactions = GROUP filtered_transactions BY user_id;
+
+-- SUM transaction_amount for each user
+summed_transactions = FOREACH grouped_transactions GENERATE group AS user_id, SUM(filtered_transactions.transaction_amount) AS total_amount;
+
+-- ORDER summed_transactions by total_amount in descending order
+ordered_transactions = ORDER summed_transactions BY total_amount DESC;
+
+-- LIMIT to top 5 users
+top_5_users = LIMIT ordered_transactions 5;
+
+-- DUMP the result
+DUMP top_5_users;
