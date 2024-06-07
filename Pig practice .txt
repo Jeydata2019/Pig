@@ -1,6 +1,11 @@
 -- LOAD data from input source
 transactions = LOAD 'sample_data.txt' USING PigStorage('\t') AS (user_id:int, transaction_amount:float);
 
+-- LOAD data from input source (assuming CSV format)
+transactions = LOAD 'sample_data.csv' USING PigStorage(',') 
+               AS (user_id:int, transaction_amount:float);
+
+
 -- FILTER transactions where transaction_amount is greater than 500
 filtered_transactions = FILTER transactions BY transaction_amount > 500;
 
