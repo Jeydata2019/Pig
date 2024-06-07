@@ -1,0 +1,78 @@
+-- Load data from HDFS
+data = LOAD 'hdfs://your-hdfs-path/data.csv' USING PigStorage(',') AS (field1:chararray, field2:int, field3:double);
+
+-- Display data
+DUMP data;
+
+
+
+-- Filter data
+filtered_data = FILTER data BY field2 > 100;
+
+-- Display filtered data
+DUMP filtered_data;
+
+
+
+-- Group and aggregate data
+grouped_data = GROUP data BY field1;
+sum_data = FOREACH grouped_data GENERATE group AS field1, SUM(data.field2) AS total;
+
+-- Display aggregated data
+DUMP sum_data;
+
+
+
+-- Load data from HDFS
+data = LOAD 'data.csv' USING PigStorage(',') AS (name:chararray, age:int);
+
+-- Group data by name and calculate the average age
+grouped = GROUP data BY name;
+result = FOREACH grouped GENERATE group AS name, AVG(data.age) AS avg_age;
+
+-- Store the result
+STORE result INTO 'output' USING PigStorage(',');
+
+
+-- Load data from HDFS
+data = LOAD 'input.txt' USING PigStorage(',') AS (field1:chararray, field2:int, field3:double);
+
+-- Filter the data
+filtered_data = FILTER data BY field2 > 10;
+
+-- Store the results
+STORE filtered_data INTO 'output' USING PigStorage(',');
+
+
+sript/Batch Mode:
+
+pig my_script.pig
+
+
+
+Grunt/Interactive Mode:
+
+
+Operators: Pig Latin includes a wide variety of operators for data manipulation such as loading, transforming, and storing data. Some key operators include:
+
+LOAD: Loads data from a file system (e.g., HDFS).
+
+STORE: Saves the result to a file system.
+
+FOREACH: Applies expressions to each element in a data set.
+
+FILTER: Selects tuples based on a condition.
+
+GROUP: Groups data based on a specified field.
+
+JOIN: Joins two or more data sets based on a specified field.
+
+
+ORDER BY: Sorts data based on specified fields.
+
+
+DISTINCT: Removes duplicate records.
+
+
+CROSS: Computes the cross-product of two or more data sets.
+
