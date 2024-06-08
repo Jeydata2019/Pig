@@ -14,7 +14,7 @@ transactions = LOAD '/user/maria_dev/data.csv' USING PigStorage(',') AS (user_id
 transactions_casted = FOREACH transactions GENERATE user_id, (float)transaction_amount AS transaction_amount;
 
 -- FILTER transactions where transaction_amount is greater than 500
-filtered_transactions = FILTER transactions_casted BY transaction_amount > 50000;
+filtered_transactions = FILTER transactions_casted BY transaction_amount > 500;
 
 -- Dump the filtered results to see the output
 DUMP filtered_transactions;
