@@ -5,6 +5,18 @@ transactions = LOAD 'sample_data.txt' USING PigStorage('\t') AS (user_id:int, tr
 transactions = LOAD 'sample_data.csv' USING PigStorage(',') 
                AS (user_id:int, transaction_amount:float);
 
+------
+-- LOAD data from input source (assuming CSV format)
+transactions = LOAD 'sample_data.csv' USING PigStorage(',') 
+               AS (user_id:int, transaction_amount:chararray);
+
+-- Explicitly cast transaction_amount to float
+transactions_casted = FOREACH transactions GENERATE user_id, (float)transaction_amount AS transaction_amount;
+
+-- FILTER transactions where transaction_amount is greater than 500
+filtered_transactions = FILTER transactions_casted BY transaction_amount > 500;
+----
+
 
 -- FILTER transactions where transaction_amount is greater than 500
 filtered_transactions = FILTER transactions BY transaction_amount > 500;
