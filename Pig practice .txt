@@ -6,7 +6,7 @@ transactions = LOAD 'sample_data.csv' USING PigStorage(',')
                AS (user_id:int, transaction_amount:float);
 
 ------
--- LOAD data from input source (assuming CSV format)
+-- LOAD data from input source (CSV format)
 transactions = LOAD 'sample_data.csv' USING PigStorage(',') 
                AS (user_id:int, transaction_amount:chararray);
 
@@ -15,6 +15,10 @@ transactions_casted = FOREACH transactions GENERATE user_id, (float)transaction_
 
 -- FILTER transactions where transaction_amount is greater than 500
 filtered_transactions = FILTER transactions_casted BY transaction_amount > 500;
+
+-- Dump the filtered results to see the output
+DUMP filtered_transactions;
+
 ----
 
 
