@@ -7,8 +7,8 @@ transactions = LOAD 'sample_data.csv' USING PigStorage(',')
 
 ------
 -- LOAD data from input source (CSV format)
-transactions = LOAD '/user/maria_dev/data.csv' USING PigStorage(',') 
-               AS (user_id:int, transaction_amount:chararray);
+transactions = LOAD '/user/maria_dev/data.csv' USING PigStorage(',') AS (user_id:int, transaction_amount:chararray);
+               
 
 -- Explicitly cast transaction_amount to float
 transactions_casted = FOREACH transactions GENERATE user_id, (float)transaction_amount AS transaction_amount;
